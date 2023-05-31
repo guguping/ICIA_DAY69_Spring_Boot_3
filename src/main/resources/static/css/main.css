@@ -1,0 +1,14 @@
+table,tr,th {
+    border: black solid 1px;
+    margin: 0 auto;
+}
+th {
+    padding: 10px;
+}
+h2 {
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: black;
+}

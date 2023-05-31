@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>save</title>
+</head>
+<style>
+    table,tr,th {
+        border: black solid 1px;
+        margin: 0 auto;
+    }
+    th {
+        padding: 10px;
+    }
+    h2 {
+        text-align: center;
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+<body>
+<h2>안녕 나는 save</h2>
+<form action="/member/save" method="post">
+    <table>
+        <tr>
+            <th>
+                <label for="memberEmail">이메일</label>
+            </th>
+            <th>
+                <input type="text" id="memberEmail" name="memberEmail">
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <label for="memberPassword">비밀번호</label>
+            </th>
+            <th>
+                <input type="password" id="memberPassword" name="memberPassword">
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <label for="memberName">이름</label>
+            </th>
+            <th>
+                <input type="text" id="memberName" name="memberName">
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <label for="memberBirth">생일</label>
+            </th>
+            <th>
+                <input type="date" id="memberBirth" name="memberBirth">
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <label for="memberMobile">전화번호</label>
+            </th>
+            <th>
+                <input type="text" id="memberMobile" name="memberMobile">
+            </th>
+        </tr>
+        <tr>
+            <th colspan="2">
+                <input type="submit" value="회원가입">
+            </th>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
