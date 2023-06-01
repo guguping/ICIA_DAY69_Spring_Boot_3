@@ -1,27 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>login</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <th:block th:replace="component/config :: config"></th:block>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
+<div th:replace="component/component :: header"></div>
+<div th:replace="component/component :: nav"></div>
+<section>
+    <div>
 <h2>안녕 나는 login</h2>
-
 <form action="/member/login" method="post">
     <table>
         <tr>
             <th><label for="memberEmail">이메일</label></th>
-            <th><input id="memberEmail" name="memberEmail"></th>
+            <th><input type="text" id="memberEmail" name="memberEmail"></th>
         </tr>
         <tr>
             <th><label for="memberPassword">비밀번호</label></th>
-            <th><input id="memberPassword" name="memberPassword"></th>
+            <th><input type="password" id="memberPassword" name="memberPassword"></th>
         </tr>
         <tr>
-            <th colspan="2"><input type="submit" value="로그인"></th>
+            <th colspan="2"><input type="submit" onclick="login()" value="로그인"></th>
+            <th colspan="2"><input type="button" onclick="login()" value="axios로그인"></th>
         </tr>
     </table>
 </form>
+    </div>
+</section>
+<div th:replace="component/component :: footer"></div>
 </body>
+<script>
+    const login = () => {
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberEmail: email,
+                memberPassword: password
+            }
+        }).then(res => {
+            console.log("res", res);
+        }).catch(err => {
+            console.log("err", err);
+        });
+    }
+</script>
 </html>

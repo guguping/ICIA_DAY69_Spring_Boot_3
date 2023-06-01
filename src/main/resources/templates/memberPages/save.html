@@ -3,56 +3,71 @@
 <head>
     <th:block th:replace="component/config :: config"></th:block>
 </head>
+<style>
+    input {
+        outline: none;
+        background-color: #9fbef8;
+        border-inline: none;
+        border-block: 0;
+    }
+</style>
 <body>
-<h2>안녕 나는 save</h2>
-<form action="/member/save" method="post">
-    <table>
-        <tr>
-            <th>
-                <label for="memberEmail">이메일</label>
-            </th>
-            <th>
-                <input type="text" id="memberEmail" name="memberEmail">
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <label for="memberPassword">비밀번호</label>
-            </th>
-            <th>
-                <input type="password" id="memberPassword" name="memberPassword">
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <label for="memberName">이름</label>
-            </th>
-            <th>
-                <input type="text" id="memberName" name="memberName">
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <label for="memberBirth">생일</label>
-            </th>
-            <th>
-                <input type="date" id="memberBirth" name="memberBirth">
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <label for="memberMobile">전화번호</label>
-            </th>
-            <th>
-                <input type="text" id="memberMobile" name="memberMobile">
-            </th>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="회원가입">
-            </th>
-        </tr>
-    </table>
-</form>
+<div th:replace="component/component :: header"></div>
+<div th:replace="component/component :: nav"></div>
+<section>
+    <div>
+        <h2>안녕 나는 save</h2>
+        <form action="/member/save" method="post">
+            <table>
+                <tr>
+                    <th>
+                        <label for="memberEmail">이메일</label>
+                    </th>
+                    <th>
+                        <input type="text" id="memberEmail" name="memberEmail">
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="memberPassword">비밀번호</label>
+                    </th>
+                    <th>
+                        <input type="password" id="memberPassword" name="memberPassword">
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="memberName">이름</label>
+                    </th>
+                    <th>
+                        <input type="text" id="memberName" name="memberName">
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="memberBirth">생일</label>
+                    </th>
+                    <th>
+                        <input type="date" id="memberBirth" name="memberBirth">
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="memberMobile">전화번호</label>
+                    </th>
+                    <th>
+                        <input type="text" id="memberMobile" name="memberMobile">
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <input type="submit" value="회원가입">
+                    </th>
+                </tr>
+            </table>
+        </form>
+    </div>
+</section>
+<div th:replace="component/component :: footer"></div>
 </body>
 </html>

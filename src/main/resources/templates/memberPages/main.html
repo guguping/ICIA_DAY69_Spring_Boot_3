@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>main</title>
+    <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
-<h2>안녕 나는 main입니다</h2>
+<div th:replace="component/component :: header"></div>
+<div th:replace="component/component :: nav"></div>
+<section>
+    <div>
+        <h2>안녕 나는 main입니다</h2>
+    </div>
+</section>
+<div th:replace="component/component :: footer"></div>
 </body>
 </html>

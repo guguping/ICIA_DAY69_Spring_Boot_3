@@ -3,12 +3,11 @@ package com.example.member.controller;
 import com.example.member.dto.MemberDTO;
 import com.example.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -52,17 +51,19 @@ public class MemberController {
         return "memberPages/login";
     }
     @PostMapping("/member/login")
-    public String loginMember(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model){
-        MemberDTO loginMemberDTO = memberService.loginMember(memberDTO);
-        if(loginMemberDTO != null){
-            session.setAttribute("memberId",loginMemberDTO.getId());
-            model.addAttribute("memberDTO",loginMemberDTO);
-            System.out.println("loginMemberDTO = " + loginMemberDTO);
+    public String loginMember(@ModelAttribute MemberDTO memberDTO, HttpSession session){
+        if(memberService.loginMember(memberDTO)){
+            session.setAttribute("memberEmail",memberDTO.getMemberEmail());
             return "memberPages/main";
         } else {
             return "memberPages/login";
         }
-
+    }
+    @PostMapping("/member/login/axios")
+    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO,HttpSession session) throws Exception {
+        memberService.loginAxios(memberDTO);
+        session.setAttribute("memberEmail",memberDTO.getMemberEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/member/")
     public String memberList(Model model){

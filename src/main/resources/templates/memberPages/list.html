@@ -4,6 +4,10 @@
     <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
+<div th:replace="component/component :: header"></div>
+<div th:replace="component/component :: nav"></div>
+<section>
+    <div>
 <h2>안녕 나는 list</h2>
 <table>
     <tr>
@@ -19,5 +23,8 @@
         <th><a th:href="@{|/member/${member.id}|}">상세</a></th>
     </tr>
 </table>
+    </div>
+</section>
+<div th:replace="component/component :: footer"></div>
 </body>
 </html>

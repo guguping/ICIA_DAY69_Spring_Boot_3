@@ -5,14 +5,56 @@
     <title>component</title>
 </head>
 <body>
-<div th:fragment="header" id="header">
-  <h1>Spring Boot Member Project</h1>
-</div>
-<div th:fragment="nav" id="nav">
-  <h1>Spring Boot nav</h1>
-</div>
-<div th:fragment="footer" id="footer">
-  <h1>Spring Boot footer</h1>
-</div>
+<header th:fragment="header" id="header">
+    <div>
+        <h2>Spring Boot Member Project</h2>
+    </div>
+</header>
+<nav th:fragment="nav" id="nav">
+    <div>
+        <ul>
+            <th:block th:if="${session.memberEmail == null}">
+                <li>
+                    <a href="/member/save">회원가입</a>
+                </li>
+                <li>
+                    <a href="/member/login">로그인</a>
+                </li>
+            </th:block>
+            <th:block th:if="${session.memberEmail != null}">
+                <li><a href="/login/main">Home</a></li>
+                <li><a href="#">글쓰기</a></li>
+                <li><a href="#">글목록</a></li>
+                <li>
+                    <a href="/member/">목록출력</a>
+                </li>
+                <li style="float: right">
+                    <a href="#">로그아웃</a>
+                </li>
+                <li style="float: right">
+                    <a href="#" th:text="${session.memberEmail+'님 환영합니다'}"></a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+<!--    <script th:inline="javascript">-->
+<!--        const loginArea = document.getElementById('login-area');-->
+<!--        const loginEmail = [[${session.memberEmail}]];-->
+<!--        console.log(loginEmail.length);-->
+<!--        if (loginEmail.length != 0) {-->
+<!--            loginArea.innerHTML = "<a hreaf='/mypage' style='color:black;'>" + loginEmail + "님 환영해요!</a>" + "<a href='/logout'>logout</a>";-->
+<!--        }-->
+<!--    </script>-->
+</nav>
+<footer th:fragment="footer" id="footer">
+    <div id="footer1">
+
+    </div>
+    <script>
+        const date = new Date();
+        const footer = document.getElementById('footer1');
+        footer.innerHTML = "<p>&copy" + date.getFullYear() + "&nbsp;HRDKOREA All rights reserved."
+    </script>
+</footer>
 </body>
 </html>

@@ -4,31 +4,38 @@
     <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
-<h2>안녕 나는 detail</h2>
-<table>
-    <tr>
-        <th>번호</th>
-        <th>이름</th>
-        <th>이메일</th>
-        <th>비밀번호</th>
-        <th>생일</th>
-        <th>전화번호</th>
-    </tr>
-    <tr>
-        <th th:text="${memberDTO.id}"></th>
-        <th th:text="${memberDTO.memberName}"></th>
-        <th th:text="${memberDTO.memberEmail}"></th>
-        <th th:text="${memberDTO.memberPassword}"></th>
-        <th th:text="${memberDTO.memberBirth}"></th>
-        <th th:text="${memberDTO.memberMobile}"></th>
-    </tr>
-    <tr>
-        <th colspan="6" style="border: unset;">
-            <a th:href="@{|/member/update/${memberDTO.id}|}"> [수정] </a>
-            <a th:href="@{|/member/delete/${memberDTO.id}|}"> [삭제] </a>
-            <a href="/member/"> [뒤로] </a>
-        </th>
-    </tr>
-</table>
+<div th:replace="component/component :: header"></div>
+<div th:replace="component/component :: nav"></div>
+<section>
+    <div>
+        <h2>안녕 나는 detail</h2>
+        <table>
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>비밀번호</th>
+                <th>생일</th>
+                <th>전화번호</th>
+            </tr>
+            <tr>
+                <th th:text="${memberDTO.id}"></th>
+                <th th:text="${memberDTO.memberName}"></th>
+                <th th:text="${memberDTO.memberEmail}"></th>
+                <th th:text="${memberDTO.memberPassword}"></th>
+                <th th:text="${memberDTO.memberBirth}"></th>
+                <th th:text="${memberDTO.memberMobile}"></th>
+            </tr>
+            <tr>
+                <th colspan="6" style="border: unset;">
+                    <a th:href="@{|/member/update/${memberDTO.id}|}"> [수정] </a>
+                    <a th:href="@{|/member/delete/${memberDTO.id}|}"> [삭제] </a>
+                    <a href="/member/"> [뒤로] </a>
+                </th>
+            </tr>
+        </table>
+    </div>
+</section>
+<div th:replace="component/component :: footer"></div>
 </body>
 </html>

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>index</title>
+    <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
 <div th:replace="component/component :: header"></div>
 <div th:replace="component/component :: nav"></div>
-<h2>안녕 나는 index</h2>
-<a href="/member/save">회원가입</a>
-<a href="/member/login">로그인</a>
-<a href="/member/">목록출력</a>
+<section>
+    <div>
+    <h2>안녕 나는 index</h2>
+    </div>
+</section>
 <div th:replace="component/component :: footer"></div>
 </body>
 </html>
