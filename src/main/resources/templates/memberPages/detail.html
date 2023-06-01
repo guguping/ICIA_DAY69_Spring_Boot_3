@@ -1,28 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>detail</title>
+    <th:block th:replace="component/config :: config"></th:block>
 </head>
-<style>
-    table, tr, th {
-        border: black solid 1px;
-        margin: 0 auto;
-    }
-
-    th {
-        padding: 10px;
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-</style>
 <body>
 <h2>안녕 나는 detail</h2>
 <table>
@@ -43,9 +23,11 @@
         <th th:text="${memberDTO.memberMobile}"></th>
     </tr>
     <tr>
-        <th colspan="2" style="border: unset;"><a th:href="@{|/member/update/${memberDTO.id}|}">[수정]</a></th>
-        <th colspan="2" style="border: unset;"><a th:href="@{|/member/delete/${memberDTO.id}|}">[삭제]</a></th>
-        <th colspan="2" style="border: unset;"><a href="/member/">[뒤로]</a></th>
+        <th colspan="6" style="border: unset;">
+            <a th:href="@{|/member/update/${memberDTO.id}|}"> [수정] </a>
+            <a th:href="@{|/member/delete/${memberDTO.id}|}"> [삭제] </a>
+            <a href="/member/"> [뒤로] </a>
+        </th>
     </tr>
 </table>
 </body>
