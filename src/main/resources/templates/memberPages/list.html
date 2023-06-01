@@ -8,23 +8,73 @@
 <div th:replace="component/component :: nav"></div>
 <section>
     <div>
-<h2>안녕 나는 list</h2>
-<table>
-    <tr>
-        <th>번호</th>
-        <th>이름</th>
-        <th>이메일</th>
-        <th>상세</th>
-    </tr>
-    <tr th:each="member:${memberDTOList}">
-        <th th:text="${member.id}"></th>
-        <th th:text="${member.memberName}"></th>
-        <th th:text="${member.memberEmail}"></th>
-        <th><a th:href="@{|/member/${member.id}|}">상세</a></th>
-    </tr>
-</table>
+        <h2>안녕 나는 list</h2>
+        <table>
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>상세</th>
+                <th>axios</th>
+            </tr>
+            <tr th:each="member:${memberDTOList}">
+                <th th:text="${member.id}"></th>
+                <th th:text="${member.memberName}"></th>
+                <th th:text="${member.memberEmail}"></th>
+                <th><a th:href="@{|/member/${member.id}|}">상세</a></th>
+                <th><a th:onclick="member_detail([[${member.id}]])">axios</a></th>
+            </tr>
+        </table>
+        <div id="test">
+            <table class="table table-striped">
+                <tr>
+                    <th>id</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>email</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>name</th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
     </div>
 </section>
 <div th:replace="component/component :: footer"></div>
 </body>
+<script>
+    const member_detail = (id) => {
+        const test = document.getElementById('test');
+        axios({
+            method: "get",
+            url: "/member-axios/" + id
+        }).then(res => {
+            console.log("res", res);
+            // 회원 데이터
+            console.log("member", res.data);
+            // 회원 이메일
+            console.log("email", res.data.memberEmail);
+            let result = "<table class=\"table table-striped\">\n" +
+                "<tr>\n" +
+                "<th>id</th>\n" +
+                "<th>" + res.data.id + "</th>\n" +
+                "</tr>\n" +
+                "<tr>\n" +
+                "<th>email</th>\n" +
+                "<th>" + res.data.memberEmail + "</th>\n" +
+                "</tr>\n" +
+                "<tr>\n" +
+                "<th>name</th>\n" +
+                "<th>" + res.data.memberName + "</th>\n" +
+                "</tr>\n" +
+                "</table>"
+            test.innerHTML = result;
+        }).catch(err => {
+            alert("해당 회원이 없습니다!");
+        })
+    }
+</script>
 </html>

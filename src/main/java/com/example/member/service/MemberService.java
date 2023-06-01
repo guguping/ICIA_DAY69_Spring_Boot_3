@@ -23,19 +23,15 @@ public class MemberService {
 
     public List<MemberDTO> findAll() {
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        for (MemberEntity memberEntity :memberRepository.findAll()){
+        for (MemberEntity memberEntity : memberRepository.findAll()) {
             memberDTOList.add(MemberDTO.toDTO(memberEntity));
         }
         return memberDTOList;
     }
 
     public MemberDTO findById(Long id) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        if (optionalMemberEntity.isPresent()){
-            return MemberDTO.toDTO(optionalMemberEntity.get());
-        } else {
-            return null;
-        }
+        MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public void updateMember(MemberDTO memberDTO) {
@@ -47,17 +43,17 @@ public class MemberService {
     }
 
     public boolean loginMember(MemberDTO memberDTO) {
-        Optional<MemberEntity> memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(),memberDTO.getMemberPassword());
-        if(memberEntity.isPresent()){
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword());
+        if (memberEntity.isPresent()) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     public void loginAxios(MemberDTO memberDTO) {
         // chaining method (체이닝 메서드)
-        memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(),memberDTO.getMemberPassword())
-                        .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다.")); // 옵셔널 객체에 값이 없으면 지정한 예외를 리턴해줌
+        memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
+                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다.")); // 옵셔널 객체에 값이 없으면 지정한 예외를 리턴해줌
     }
 }

@@ -2,7 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div th:replace="component/component :: header"></div>
@@ -21,8 +20,10 @@
             <th><input type="password" id="memberPassword" name="memberPassword"></th>
         </tr>
         <tr>
-            <th colspan="2"><input type="submit" onclick="login()" value="로그인"></th>
-            <th colspan="2"><input type="button" onclick="login()" value="axios로그인"></th>
+            <th colspan="2">
+                <input type="submit" onclick="login()" value="로그인">
+                <input type="button" onclick="login()" value="axios로그인">
+            </th>
         </tr>
     </table>
 </form>

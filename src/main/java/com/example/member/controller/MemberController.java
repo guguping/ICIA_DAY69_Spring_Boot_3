@@ -70,4 +70,9 @@ public class MemberController {
         model.addAttribute("memberDTOList",memberService.findAll());
         return "memberPages/list";
     }
+    @GetMapping("/member-axios/{id}")
+    public ResponseEntity member_axios(@PathVariable Long id) throws Exception {
+        MemberDTO memberDTO = memberService.findById(id);
+        return new ResponseEntity<>(memberDTO,HttpStatus.OK);
+    }
 }
