@@ -24,7 +24,8 @@
                         <label for="memberEmail">이메일</label>
                     </th>
                     <th>
-                        <input type="text" id="memberEmail" name="memberEmail">
+                        <input type="text" id="memberEmail" name="memberEmail" th:onblur="emailCheck()">
+                        <p id="emailResult"></p>
                     </th>
                 </tr>
                 <tr>
@@ -70,4 +71,23 @@
 </section>
 <div th:replace="component/component :: footer"></div>
 </body>
+<script>
+    const emailCheck = () => {
+        const memberEmail = document.getElementById('memberEmail').value;
+        const emailResult = document.getElementById('emailResult');
+        axios({
+            method:"post",
+            url:"/member/emailCheck",
+            data:{
+                memberEmail: memberEmail
+            }
+        }).then(res => {
+            console.log("성공띠");
+            emailResult.innerHTML = "좋은 이메일 입니다!";
+        }).catch(err => {
+            emailResult.innerHTML = "중복된 이메일 입니다!";
+            console.log("실패띠");
+        })
+    }
+</script>
 </html>

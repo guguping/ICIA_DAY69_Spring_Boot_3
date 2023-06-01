@@ -74,5 +74,18 @@ public class MemberTest {
         memberService.memberDelete(savedId);
         assertThatThrownBy(() -> memberService.findById(savedId)).isInstanceOf(NoSuchElementException.class);
     }
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("Axios수정 테스트")
+    public void memberUpdate() {
+        MemberDTO memberDTO = newMember(999);
+        Long saved = memberService.save(memberDTO);
+        MemberDTO dto = new MemberDTO();
+        dto.setId(saved);
+        dto.setMemberEmail("수정한 이메일");
+        memberService.updateMember(dto);
+        assertThat(memberDTO.getMemberEmail()).isNotEqualTo(dto.getMemberEmail());
+    }
 
 }

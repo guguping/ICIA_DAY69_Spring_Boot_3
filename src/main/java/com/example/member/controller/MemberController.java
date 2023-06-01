@@ -16,68 +16,96 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
     @GetMapping("/member/save")
-    public String memberSave(){
+    public String memberSave() {
         return "memberPages/save";
     }
+
     @PostMapping("/member/save")
-    public String saveMember(@ModelAttribute MemberDTO memberDTO){
+    public String saveMember(@ModelAttribute MemberDTO memberDTO) {
         System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO);
         return "index";
     }
+
     @GetMapping("/member/{id}")
-    public String memberDetail(@PathVariable Long id, Model model){
-        model.addAttribute("memberDTO",memberService.findById(id));
+    public String memberDetail(@PathVariable Long id, Model model) {
+        model.addAttribute("memberDTO", memberService.findById(id));
         return "memberPages/detail";
     }
+
     @GetMapping("/member/update/{id}")
-    public String memberUpdate(@PathVariable Long id,Model model){
-        model.addAttribute("memberDTO",memberService.findById(id));
+    public String memberUpdate(@PathVariable Long id, Model model) {
+        model.addAttribute("memberDTO", memberService.findById(id));
         return "memberPages/update";
     }
+
     @PostMapping("/member/update")
-    public String updateMember(@ModelAttribute MemberDTO memberDTO){
+    public String updateMember(@ModelAttribute MemberDTO memberDTO) {
         memberService.updateMember(memberDTO);
         return "redirect:/member/";
     }
+
     @GetMapping("/member/delete/{id}")
-    public String memberDelete(@PathVariable Long id){
+    public String memberDelete(@PathVariable Long id) {
         memberService.memberDelete(id);
         return "redirect:/member/";
     }
+
     @GetMapping("/member/login")
-    public String memberLogin(){
+    public String memberLogin() {
         return "memberPages/login";
     }
+
     @PostMapping("/member/login")
-    public String loginMember(@ModelAttribute MemberDTO memberDTO, HttpSession session){
-        if(memberService.loginMember(memberDTO)){
-            session.setAttribute("memberEmail",memberDTO.getMemberEmail());
+    public String loginMember(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        if (memberService.loginMember(memberDTO)) {
+            session.setAttribute("memberEmail", memberDTO.getMemberEmail());
             return "memberPages/main";
         } else {
             return "memberPages/login";
         }
     }
+
     @PostMapping("/member/login/axios")
-    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO,HttpSession session) throws Exception {
+    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
         memberService.loginAxios(memberDTO);
-        session.setAttribute("memberEmail",memberDTO.getMemberEmail());
+        session.setAttribute("memberEmail", memberDTO.getMemberEmail());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/member/")
-    public String memberList(Model model){
-        model.addAttribute("memberDTOList",memberService.findAll());
+    public String memberList(Model model) {
+        model.addAttribute("memberDTOList", memberService.findAll());
         return "memberPages/list";
     }
+
     @GetMapping("/member-axios/{id}")
     public ResponseEntity member_axios(@PathVariable Long id) throws Exception {
         MemberDTO memberDTO = memberService.findById(id);
-        return new ResponseEntity<>(memberDTO,HttpStatus.OK);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
+
     @DeleteMapping("/member/{id}")
-    public ResponseEntity deleteAxios(@PathVariable Long id) throws Exception{
+    public ResponseEntity deleteAxios(@PathVariable Long id) throws Exception {
         memberService.memberDelete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/member/update")
+    public ResponseEntity memberUpdate(@RequestBody MemberDTO memberDTO) throws Exception {
+        System.out.println("memberDTO = " + memberDTO);
+        memberService.updateMember(memberDTO);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/member/emailCheck")
+    public ResponseEntity emailCheck(@RequestBody MemberDTO memberDTO) {
+        if(memberService.memberEmailCheck(memberDTO.getMemberEmail())){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }

@@ -56,4 +56,12 @@ public class MemberService {
         memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
                 .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다.")); // 옵셔널 객체에 값이 없으면 지정한 예외를 리턴해줌
     }
+
+    public boolean memberEmailCheck(String memberEmail) {
+        if(memberRepository.findByMemberEmail(memberEmail).isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
