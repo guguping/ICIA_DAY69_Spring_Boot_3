@@ -22,10 +22,10 @@
                 <th th:text="${member.memberName}"></th>
                 <th th:text="${member.memberEmail}"></th>
                 <th><a th:href="@{|/member/${member.id}|}">상세</a></th>
-                <th><a th:onclick="member_detail([[${member.id}]])">axios</a></th>
+                <th><a th:onclick="member_detail([[${member.id}]])" style="cursor: pointer;">axios</a></th>
             </tr>
         </table>
-        <div id="test">
+        <div id="test" style="display: none;">
             <table class="table table-striped">
                 <tr>
                     <th>id</th>
@@ -39,6 +39,10 @@
                     <th>name</th>
                     <th></th>
                 </tr>
+                <tr>
+                    <th>삭제</th>
+                    <th></th>
+                </tr>
             </table>
         </div>
     </div>
@@ -46,8 +50,20 @@
 <div th:replace="component/component :: footer"></div>
 </body>
 <script>
+    const member_delete = (id) => {
+        axios({
+            method: "delete",
+            url: "/member/"+id
+        }).then(res => {
+            alert("삭제완료! 확인을 클릭하면 목록으로 돌아갑니다!");
+            location.href = "/member/";
+        }).catch(err => {
+            alert("삭제 실패!");
+        });
+    }
     const member_detail = (id) => {
         const test = document.getElementById('test');
+        test.style.display = "block";
         axios({
             method: "get",
             url: "/member-axios/" + id
@@ -70,7 +86,13 @@
                 "<th>name</th>\n" +
                 "<th>" + res.data.memberName + "</th>\n" +
                 "</tr>\n" +
-                "</table>"
+                "<tr>\n" +
+                "<th>삭제</th>\n" +
+                "<th>\n" +
+                "<button onclick="+"member_delete("+res.data.id+")>삭제</button>"+
+                "</th>\n" +
+                "</tr>"
+                "</table>";
             test.innerHTML = result;
         }).catch(err => {
             alert("해당 회원이 없습니다!");

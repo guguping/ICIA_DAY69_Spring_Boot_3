@@ -75,4 +75,9 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findById(id);
         return new ResponseEntity<>(memberDTO,HttpStatus.OK);
     }
+    @DeleteMapping("/member/{id}")
+    public ResponseEntity deleteAxios(@PathVariable Long id) throws Exception{
+        memberService.memberDelete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
