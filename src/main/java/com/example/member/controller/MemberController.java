@@ -94,8 +94,7 @@ public class MemberController {
     }
 
     @PutMapping("/member/update")
-    public ResponseEntity memberUpdate(@RequestBody MemberDTO memberDTO) throws Exception {
-        System.out.println("memberDTO = " + memberDTO);
+    public ResponseEntity memberUpdate(@RequestBody MemberDTO memberDTO) {
         memberService.updateMember(memberDTO);
         return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }

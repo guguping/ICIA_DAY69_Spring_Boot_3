@@ -9,14 +9,14 @@
 <section>
     <div id="axios-gogo">
     <form action="/member/update" method="post">
-        <input type="text" name="id" id="memberId" th:value="${memberDTO.id}" style="display: none;">
+        <input type="hidden" name="id" id="memberId" th:value="${memberDTO.id}">
         <table>
             <tr>
                 <th>
                     <label for="memberEmail">이메일</label>
                 </th>
                 <th>
-                    <input type="text" id="memberEmail" name="memberEmail" th:value="${memberDTO.memberEmail}">
+                    <input type="text" id="memberEmail" name="memberEmail" th:value="${memberDTO.memberEmail}" readonly>
                 </th>
             </tr>
             <tr>
@@ -24,8 +24,7 @@
                     <label for="memberPassword">비밀번호</label>
                 </th>
                 <th>
-                    <input type="password" id="memberPassword" name="memberPassword"
-                           th:value="${memberDTO.memberPassword}">
+                    <input type="password" id="memberPassword" name="memberPassword">
                 </th>
             </tr>
             <tr>
@@ -55,7 +54,7 @@
             <tr>
                 <th colspan="2">
                     <input type="submit" value="수정">
-                    <input type="button" value="axios수정" th:onclick="member_updata()">
+                    <input type="button" value="axios수정" onclick="member_updata()">
                     <input type="button" value="뒤로" th:onclick="|location.href='@{/member/(id=${memberDTO.id})}'|">
                 </th>
             </tr>
@@ -65,25 +64,36 @@
 </section>
 <div th:replace="component/component :: footer"></div>
 </body>
-<script>
+<script th:inline="javascript">
     const member_updata = () => {
-        axios({
-            method:"put",
-            url:"/member/update",
-            data:{
-                id:document.getElementById("memberId").value,
-                memberEmail:document.getElementById("memberEmail").value,
-                memberPassword:document.getElementById("memberPassword").value,
-                memberName:document.getElementById("memberName").value,
-                memberBirth:document.getElementById("memberBirth").value,
-                memberMobile:document.getElementById("memberMobile").value
-            }
-        }).then(res =>{
-            alert("수정완료! 확인을 클릭하면 디테일로 돌아갑니다!");
-            location.href ="/member/"+res.data.id;
-        }).catch(err => {
-            alert("수정 실패!");
-        })
+        const passDB = [[${memberDTO.memberPassword}]];
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        const id = document.querySelector('input[name="id"]').value;
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const name = document.querySelector('input[name="memberName"]').value;
+        const birth = document.querySelector('input[name="memberBirth"]').value;
+        const mobile = document.querySelector('input[name="memberMobile"]').value;
+        if (passDB == password){
+            axios({
+                method:"put",
+                url:"/member/update",
+                data:{
+                    id:id,
+                    memberEmail:email,
+                    memberName:name,
+                    memberPassword:password,
+                    memberBirth:birth,
+                    memberMobile:mobile
+                }
+            }).then(res =>{
+                alert("수정완료! 확인을 클릭하면 디테일로 돌아갑니다!");
+                location.href ="/member/"+id;
+            }).catch(err => {
+                alert("수정 실패!");
+            })
+        }else {
+            alert("비밀번호가 일치하지 않습니다")
+        }
     }
 </script>
 </html>
