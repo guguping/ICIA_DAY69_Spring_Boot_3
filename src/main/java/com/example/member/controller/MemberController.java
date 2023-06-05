@@ -54,22 +54,35 @@ public class MemberController {
     }
 
     @GetMapping("/member/login")
-    public String memberLogin() {
+    public String memberLogin(@RequestParam(value = "redirectURI",defaultValue = "/login/main") String redirectURI,
+                              Model model) {
+        model.addAttribute("redirectURI",redirectURI);
         return "memberPages/login";
     }
 
     @PostMapping("/member/login")
-    public String loginMember(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+    public String loginMember(@ModelAttribute MemberDTO memberDTO, HttpSession session,
+                              @RequestParam("redirectURI") String redirectURI) {
         if (memberService.loginMember(memberDTO)) {
             session.setAttribute("memberEmail", memberDTO.getMemberEmail());
-            return "memberPages/main";
+//            return "memberPages/main";
+            // 로그인 성공하면 사용자가 직전에 요청한 주소로 redirect
+            // 인터셉터에 걸리지 않고 처음부터 로그인하는 사용작엿다면
+            // redirect:/member/mypage로 요청되며 , memberMain 화면으로 전환.
+            return "redirect:"+redirectURI;
         } else {
             return "memberPages/login";
         }
     }
+    @GetMapping("/member/logout")
+    public String memberLogout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
 
     @PostMapping("/member/login/axios")
-    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
+    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session,
+                                           @RequestParam("redirectURI") String redirectURI) throws Exception {
         memberService.loginAxios(memberDTO);
         session.setAttribute("memberEmail", memberDTO.getMemberEmail());
         return new ResponseEntity<>(HttpStatus.OK);

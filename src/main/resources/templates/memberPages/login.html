@@ -12,6 +12,7 @@
 <form action="/member/login" method="post">
     <table>
         <tr>
+            <input type="text" name="redirectURI" th:value="${redirectURI}" style="display: none;">
             <th><label for="memberEmail">이메일</label></th>
             <th><input type="text" id="memberEmail" name="memberEmail"></th>
         </tr>
@@ -44,6 +45,7 @@
             }
         }).then(res => {
             console.log("res", res);
+            location.href = redirectURI;
         }).catch(err => {
             console.log("err", err);
         });
